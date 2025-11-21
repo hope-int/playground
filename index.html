@@ -329,9 +329,15 @@
 
         function filterProjects(items) {
             return items.filter(item => {
+                // 1. Must be a file (exclude directories)
+                if (item.type !== 'file') return false;
+
+                // 2. Exclude the main index.html itself
                 if (item.name === 'index.html') return false;
-                if (item.name.startsWith('.')) return false;
-                return true;
+
+                // 3. Check for .html or .htm extension (case-insensitive)
+                const name = item.name.toLowerCase();
+                return name.endsWith('.html') || name.endsWith('.htm');
             });
         }
 
